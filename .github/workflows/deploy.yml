@@ -1,4 +1,3 @@
-$yaml = @"
 name: Build and Deploy to Azure Container Apps
 
 on:
@@ -20,26 +19,19 @@ jobs:
       - name: Azure Login (OIDC)
         uses: azure/login@v2
         with:
-          client-id: `${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: `${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: `${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Build and Push Image to ACR
         run: |
           az acr login --name acrtaskflow5799
-          docker build -t acrtaskflow5799.azurecr.io/taskflow-api:`${{ github.sha }} .
-          docker push acrtaskflow5799.azurecr.io/taskflow-api:`${{ github.sha }}
+          docker build -t acrtaskflow5799.azurecr.io/taskflow-api:${{ github.sha }} .
+          docker push acrtaskflow5799.azurecr.io/taskflow-api:${{ github.sha }}
 
       - name: Deploy to Azure Container Apps
         run: |
           az containerapp update \
             --name ca-taskflow-api \
             --resource-group rg-taskflow-dev \
-            --image acrtaskflow5799.azurecr.io/taskflow-api:`${{ github.sha }}
-"@
-
-[System.IO.File]::WriteAllText("$PWD\.github\workflows\deploy.yml", $yaml)
-
-git add .github/workflows/deploy.yml
-git commit -m "Use docker build/push on runner instead of ACR Tasks"
-git push origin main
+            --image acrtaskflow5799.azurecr.io/taskflow-api:${{ github.sha }}
