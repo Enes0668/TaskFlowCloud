@@ -35,7 +35,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
+//enes
 // Uygulama başlarken veritabanı tablosu yoksa otomatik oluştur
 using (var scope = app.Services.CreateScope())
 {
