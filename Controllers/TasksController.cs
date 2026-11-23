@@ -16,6 +16,7 @@ public class TasksController : ControllerBase
     private readonly ServiceBusClient _serviceBusClient;
     private readonly IConfiguration _config;
 
+    int a;
     public TasksController(
         AppDbContext db,
         BlobServiceClient blobServiceClient,
