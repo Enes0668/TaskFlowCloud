@@ -17,6 +17,7 @@ public class TasksController : ControllerBase
     private readonly IConfiguration _config;
 
     int a;
+    int b;
     public TasksController(
         AppDbContext db,
         BlobServiceClient blobServiceClient,
